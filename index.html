@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrintLab - Print on Demand & Jualan Desain</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
+    <style>
+        :root {
+            --primary-blue: #1a237e;
+            --secondary-blue: #283593;
+            --accent-blue: #3949ab;
+            --light-blue: #e8eaf6;
+            --text-dark: #1a1a1a;
+            --text-light: #ffffff;
+            --text-gray: #666;
+            --success-green: #4caf50;
+            --warning-orange: #ff9800;
+            --danger-red: #f44336;
+            --border-color: #ddd;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .btn-success {
+            background-color: var(--success-green);
+            color: white;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 35, 126, 0.9), rgba(40, 53, 147, 0.9)), url('https://images.unsplash.com/photo-1567095761054-7a02e69e5c43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-blue);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 5rem 0;
+            background-color: var(--light-blue);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-preview {
+            height: 250px;
+            background: linear-gradient(45deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .product-preview .design-sample {
+            width: 80%;
+            height: 80%;
+            background: white;
+            border: 2px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--accent-blue);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success-green);
+            margin-bottom: 1rem;
+        }
+        
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            background: var(--light-blue);
+            color: var(--accent-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* Upload Section */
+        .upload-section {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .upload-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .upload-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .upload-header h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-body {
+            padding: 3rem;
+        }
+        
+        .upload-zone {
+            border: 3px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-zone:hover {
+            border-color: var(--accent-blue);
+            background: var(--light-blue);
+        }
+        
+        .upload-zone i {
+            font-size: 4rem;
+            color: var(--accent-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .upload-zone p {
+            margin-bottom: 1rem;
+            color: var(--text-gray);
+        }
+        
+        .file-requirements {
+            background: var(--light-blue);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .file-requirements h4 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .file-requirements ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+        
+        .file-requirements li {
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+        }
+        
+        .file-requirements li i {
+            color: var(--success-green);
+            margin-right: 0.5rem;
+        }
+        
+        /* Design Studio */
+        .design-studio {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .studio-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .studio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .studio-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .studio-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .studio-features {
+            list-style: none;
+        }
+        
+        .studio-features li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .studio-features i {
+            color: #4caf50;
+            font-size: 1.2rem;
+        }
+        
+        .studio-preview {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .preview-area {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #f5f7fa, #c3cfe2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .preview-design {
+            width: 80%;
+            height: 80%;
+            background: white;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+        }
+        
+        .design-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .pricing-card.popular {
+            border: 3px solid var(--accent-blue);
+            transform: scale(1.05);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: var(--text-gray);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-gray);
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features li i {
+            color: var(--success-green);
+            margin-right: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            padding: 1.5rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+        
+        /* Responsive Design */
+        @media only screen and (max-width: 1024px) {
+            .studio-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .studio-content {
+                text-align: center;
+            }
+        }
+        
+        @media only screen and (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+                display: none;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .upload-body {
+                padding: 2rem 1rem;
+            }
+            
+            .upload-zone {
+                padding: 2rem 1rem;
+            }
+        }
+        
+        @media only screen and (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+            
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        /* Loading */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .loading.active {
+            display: flex;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--light-blue);
+            border-top: 5px solid var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            box-shadow: var(--shadow);
+            z-index: 4000;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .notification.success {
+            background: var(--success-green);
+        }
+        
+        .notification.error {
+            background: var(--danger-red);
+        }
+        
+        .notification.info {
+            background: var(--accent-blue);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-print"></i>
+                <h1>PrintLab</h1>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul id="mainNav">
+                    <li><a href="#home" class="active">Beranda</a></li>
+                    <li><a href="#products">Produk</a></li>
+                    <li><a href="#design">Desain Studio</a></li>
+                    <li><a href="#upload">Upload Desain</a></li>
+                    <li><a href="#pricing">Harga</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="#login" class="btn btn-secondary" id="loginBtn">Masuk</a>
+                <a href="#register" class="btn btn-primary" id="registerBtn">Daftar Gratis</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Jualan Desain Anda, Kami yang Cetak & Kirim</h2>
+            <p>Platform Print on Demand pertama di Indonesia. Upload desain Anda, pilih produk, dan kami akan menangani produksi, packaging, dan pengiriman ke customer Anda.</p>
+            <div class="hero-buttons">
+                <a href="#upload" class="btn btn-primary btn-large" style="padding: 1rem 2.5rem; font-size: 1.1rem;">
+                    <i class="fas fa-cloud-upload-alt"></i> Mulai Upload Desain
+                </a>
+                <a href="#products" class="btn btn-secondary btn-large" style="padding: 1rem 2.5rem; font-size: 1.1rem;">
+                    <i class="fas fa-store"></i> Lihat Katalog Produk
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Mengapa PrintLab?</h2>
+                <p>Platform lengkap untuk memulai bisnis merchandise tanpa modal dan stok</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3>Upload Mudah</h3>
+                    <p>Upload desain dalam berbagai format (PNG, JPG, SVG, PDF) dengan ukuran hingga 100MB</p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3>100+ Produk</h3>
+                    <p>Pilih dari berbagai produk berkualitas: kaos, hoodie, mug, totbag, stiker, dan lainnya</p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Fulfillment Otomatis</h3>
+                    <p>Kami produksi, pack, dan kirim langsung ke customer Anda. Tanpa repot stok & pengiriman</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Katalog Produk</h2>
+                <p>Pilih dari berbagai produk premium yang siap dicetak dengan desain Anda</p>
+            </div>
+            
+            <div class="products-grid">
+                <!-- Produk 1 -->
+                <div class="product-card">
+                    <div class="product-preview">
+                        <div class="design-sample">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Kaos Premium Cotton 30s</h3>
+                        <div class="product-price">Rp 89.000</div>
+                        <div class="product-tags">
+                            <span class="tag">Bahan Katun</span>
+                            <span class="tag">8 Warna</span>
+                            <span class="tag">Semua Ukuran</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="selectProduct('Kaos Premium')">Pilih Produk Ini</button>
+                    </div>
+                </div>
+                
+                <!-- Produk 2 -->
+                <div class="product-card">
+                    <div class="product-preview">
+                        <div class="design-sample">
+                            <i class="fas fa-mug-hot"></i>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Mug Keramik 11 oz</h3>
+                        <div class="product-price">Rp 45.000</div>
+                        <div class="product-tags">
+                            <span class="tag">Food Grade</span>
+                            <span class="tag">Tahan Microwave</span>
+                            <span class="tag">Full Color</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="selectProduct('Mug Keramik')">Pilih Produk Ini</button>
+                    </div>
+                </div>
+                
+                <!-- Produk 3 -->
+                <div class="product-card">
+                    <div class="product-preview">
+                        <div class="design-sample">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Tote Bag Kanvas 30x40cm</h3>
+                        <div class="product-price">Rp 55.000</div>
+                        <div class="product-tags">
+                            <span class="tag">Kanvas Premium</span>
+                            <span class="tag">Tali Panjang</span>
+                            <span class="tag">Ramah Lingkungan</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="selectProduct('Tote Bag')">Pilih Produk Ini</button>
+                    </div>
+                </div>
+                
+                <!-- Produk 4 -->
+                <div class="product-card">
+                    <div class="product-preview">
+                        <div class="design-sample">
+                            <i class="fas fa-sticky-note"></i>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Stiker Vinyl 10x10cm</h3>
+                        <div class="product-price">Rp 12.000</div>
+                        <div class="product-tags">
+                            <span class="tag">Waterproof</span>
+                            <span class="tag">Tahan UV</span>
+                            <span class="tag">Min Order 10pcs</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="selectProduct('Stiker Vinyl')">Pilih Produk Ini</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="upload-section" id="upload">
+        <div class="container">
+            <div class="section-title">
+                <h2>Upload Desain Anda</h2>
+                <p>Upload desain Anda dan lihat preview langsung di produk pilihan</p>
+            </div>
+            
+            <div class="upload-container">
+                <div class="upload-header">
+                    <h3>Drag & Drop File Desain</h3>
+                    <p>Format yang didukung: PNG, JPG, SVG, PDF (Max 100MB)</p>
+                </div>
+                
+                <div class="upload-body">
+                    <div class="upload-zone" id="dropzone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p><strong>Drag file Anda ke sini atau klik untuk upload</strong></p>
+                        <p>Ukuran maksimum: 100MB per file</p>
+                        <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.svg,.pdf" style="display: none;">
+                    </div>
+                    
+                    <div class="file-requirements">
+                        <h4><i class="fas fa-info-circle"></i> Persyaratan File</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Format: PNG, JPG, SVG, atau PDF</li>
+                            <li><i class="fas fa-check"></i> Ukuran minimum: 1500x1500px untuk cetak berkualitas</li>
+                            <li><i class="fas fa-check"></i> Mode warna: RGB untuk digital, CMYK untuk cetak</li>
+                            <li><i class="fas fa-check"></i> Resolusi: 300 DPI untuk hasil terbaik</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="designName">Nama Desain</label>
+                        <input type="text" id="designName" class="form-control" placeholder="Contoh: Desain Kaos Summer 2024">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="designDescription">Deskripsi Desain</label>
+                        <textarea id="designDescription" class="form-control" rows="3" placeholder="Jelaskan desain Anda, inspirasi, atau pesan khusus..."></textarea>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-block" onclick="uploadDesign()" style="width: 100%; padding: 1rem;">
+                        <i class="fas fa-upload"></i> Upload & Lanjut ke Preview
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Studio -->
+    <section class="design-studio" id="design">
+        <div class="container studio-container">
+            <div class="studio-grid">
+                <div class="studio-content">
+                    <h2>Design Studio</h2>
+                    <p>Edit dan sesuaikan desain Anda langsung di platform kami. Tanpa perlu software desain yang rumit.</p>
+                    
+                    <ul class="studio-features">
+                        <li><i class="fas fa-check-circle"></i> Edit teks langsung pada desain</li>
+                        <li><i class="fas fa-check-circle"></i> Tambahkan efek dan filter</li>
+                        <li><i class="fas fa-check-circle"></i> Preview real-time di berbagai produk</li>
+                        <li><i class="fas fa-check-circle"></i> Simpan template untuk digunakan kembali</li>
+                    </ul>
+                    
+                    <a href="#upload" class="btn btn-success" style="margin-top: 2rem;">
+                        <i class="fas fa-magic"></i> Coba Design Studio
+                    </a>
+                </div>
+                
+                <div class="studio-preview">
+                    <div class="preview-area">
+                        <div class="preview-design" id="livePreview">
+                            <i class="fas fa-star"></i> Desain Anda
+                        </div>
+                    </div>
+                    
+                    <div class="design-controls">
+                        <button class="btn btn-outline" onclick="changeDesignText()">
+                            <i class="fas fa-edit"></i> Ubah Teks
+                        </button>
+                        <button class="btn btn-outline" onclick="changeDesignColor()">
+                            <i class="fas fa-palette"></i> Ubah Warna
+                        </button>
+                        <button class="btn btn-outline" onclick="resetDesign()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Paket Harga</h2>
+                <p>Pilih paket yang sesuai dengan kebutuhan bisnis Anda</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <!-- Paket Starter -->
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">Rp 0<span>/bulan</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 10 Upload Desain/bulan</li>
+                        <li><i class="fas fa-check"></i> Akses ke 50+ produk</li>
+                        <li><i class="fas fa-check"></i> Komisi 25% per penjualan</li>
+                        <li><i class="fas fa-times"></i> Design Studio</li>
+                        <li><i class="fas fa-times"></i> Integrasi Marketplace</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="selectPlan('Starter')">Mulai Gratis</button>
+                </div>
+                
+                <!-- Paket Pro -->
+                <div class="pricing-card popular">
+                    <div class="popular-badge">POPULER</div>
+                    <h3>Pro Merchant</h3>
+                    <div class="price">Rp 99.000<span>/bulan</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Unlimited Upload Desain</li>
+                        <li><i class="fas fa-check"></i> Akses ke 100+ produk</li>
+                        <li><i class="fas fa-check"></i> Komisi 35% per penjualan</li>
+                        <li><i class="fas fa-check"></i> Design Studio Premium</li>
+                        <li><i class="fas fa-check"></i> Integrasi Tokopedia & Shopee</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="selectPlan('Pro')">Upgrade ke Pro</button>
+                </div>
+                
+                <!-- Paket Enterprise -->
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Rp 299.000<span>/bulan</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Unlimited Upload + Priority</li>
+                        <li><i class="fas fa-check"></i> Semua produk + Custom</li>
+                        <li><i class="fas fa-check"></i> Komisi 40% per penjualan</li>
+                        <li><i class="fas fa-check"></i> API Access & White Label</li>
+                        <li><i class="fas fa-check"></i> Dedicated Account Manager</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="selectPlan('Enterprise')">Hubungi Sales</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>PrintLab</h3>
+                    <p>Platform Print on Demand terkemuka di Indonesia, membantu kreator dan pebisnis menjual desain tanpa modal dan stok.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Produk</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Kaos & Pakaian</a></li>
+                        <li><a href="#">Mug & Gelas</a></li>
+                        <li><a href="#">Tas & Aksesoris</a></li>
+                        <li><a href="#">Stiker & Label</a></li>
+                        <li><a href="#">Produk Custom</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Bantuan</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Pusat Bantuan</a></li>
+                        <li><a href="#">Cara Kerja</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Kontak</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <span>hello@printlab.id</span>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <span>021-1234-5678</span>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <span>Jakarta, Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 PrintLab. All rights reserved. Platform Print on Demand Indonesia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Masuk ke Akun</h3>
+                <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="email@anda.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Password Anda">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="login()">Masuk</button>
+                <p style="text-align: center; margin-top: 1rem;">Belum punya akun? <a href="#" onclick="showRegister()">Daftar disini</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Daftar Akun Baru</h3>
+                <button class="close-modal" onclick="closeModal('registerModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="regName">Nama Lengkap</label>
+                    <input type="text" id="regName" class="form-control" placeholder="Nama Anda">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" class="form-control" placeholder="email@anda.com">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" class="form-control" placeholder="Minimal 8 karakter">
+                </div>
+                <div class="form-group">
+                    <label for="regConfirmPassword">Konfirmasi Password</label>
+                    <input type="password" id="regConfirmPassword" class="form-control" placeholder="Ulangi password">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="register()">Daftar Sekarang</button>
+                <p style="text-align: center; margin-top: 1rem;">Sudah punya akun? <a href="#" onclick="showLogin()">Masuk disini</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Selection Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalProductTitle">Pilih Produk</h3>
+                <button class="close-modal" onclick="closeModal('productModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="productSize">Ukuran</label>
+                    <select id="productSize" class="form-control">
+                        <option value="S">Small (S)</option>
+                        <option value="M" selected>Medium (M)</option>
+                        <option value="L">Large (L)</option>
+                        <option value="XL">Extra Large (XL)</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productColor">Warna Produk</label>
+                    <select id="productColor" class="form-control">
+                        <option value="white">Putih</option>
+                        <option value="black">Hitam</option>
+                        <option value="blue">Biru</option>
+                        <option value="red">Merah</option>
+                        <option value="gray">Abu-abu</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productQty">Jumlah</label>
+                    <input type="number" id="productQty" class="form-control" min="1" max="100" value="1">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="addToCart()">Tambahkan ke Keranjang</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Memproses...</p>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+    
+    <script>
+        // Initialize Dropzone
+        Dropzone.autoDiscover = false;
+        let myDropzone;
+        
+        // Database Simulasi
+        const database = {
+            users: [],
+            designs: [],
+            products: [
+                {
+                    id: 1,
+                    name: "Kaos Premium Cotton 30s",
+                    price: 89000,
+                    category: "apparel",
+                    colors: ["white", "black", "blue", "red", "gray", "green", "yellow", "pink"],
+                    sizes: ["S", "M", "L", "XL", "XXL"]
+                },
+                {
+                    id: 2,
+                    name: "Mug Keramik 11 oz",
+                    price: 45000,
+                    category: "drinkware",
+                    colors: ["white"],
+                    sizes: ["11oz"]
+                },
+                {
+                    id: 3,
+                    name: "Tote Bag Kanvas 30x40cm",
+                    price: 55000,
+                    category: "bags",
+                    colors: ["natural", "black", "blue", "red"],
+                    sizes: ["30x40cm"]
+                },
+                {
+                    id: 4,
+                    name: "Stiker Vinyl 10x10cm",
+                    price: 12000,
+                    category: "stickers",
+                    colors: ["custom"],
+                    sizes: ["10x10cm"],
+                    minOrder: 10
+                }
+            ],
+            cart: [],
+            orders: []
+        };
+        
+        // State Management
+        let currentUser = null;
+        let selectedProduct = null;
+        let currentDesign = null;
+        
+        // DOM Elements
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const productModal = document.getElementById('productModal');
+        const loading = document.getElementById('loading');
+        const notification = document.getElementById('notification');
+        const mainNav = document.getElementById('mainNav');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const dropzoneElement = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const livePreview = document.getElementById('livePreview');
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Dropzone
+            myDropzone = new Dropzone("#dropzone", {
+                url: "/upload",
+                autoProcessQueue: false,
+                maxFiles: 1,
+                maxFilesize: 100,
+                acceptedFiles: "image/*,.pdf",
+                addRemoveLinks: true,
+                dictDefaultMessage: '<i class="fas fa-cloud-upload-alt fa-3x"></i><p><strong>Drag file Anda ke sini atau klik untuk upload</strong></p><p>Ukuran maksimum: 100MB per file</p>',
+                dictRemoveFile: "Hapus",
+                init: function() {
+                    this.on("addedfile", function(file) {
+                        currentDesign = {
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                            preview: URL.createObjectURL(file)
+                        };
+                        showNotification("Desain berhasil diupload!", "success");
+                        updateLivePreview();
+                    });
+                }
+            });
+            
+            // File input click
+            dropzoneElement.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'INPUT') {
+                    fileInput.click();
+                }
+            });
+            
+            fileInput.addEventListener('change', function(e) {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+                    currentDesign = {
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        preview: URL.createObjectURL(file)
+                    };
+                    showNotification("Desain berhasil diupload!", "success");
+                    updateLivePreview();
+                }
+            });
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                this.innerHTML = mainNav.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Close mobile menu on click
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+            });
+            
+            // Login/Register buttons
+            document.getElementById('loginBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                showLogin();
+            });
+            
+            document.getElementById('registerBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                showRegister();
+            });
+            
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Initialize with some demo data
+            initializeDemoData();
+        });
+        
+        // Modal Functions
+        function showLogin() {
+            closeAllModals();
+            loginModal.classList.add('active');
+        }
+        
+        function showRegister() {
+            closeAllModals();
+            registerModal.classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('active');
+            });
+        }
+        
+        // Authentication Functions
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                showNotification("Harap isi semua field!", "error");
+                return;
+            }
+            
+            showLoading(true);
+            
+            // Simulate API call
+            setTimeout(() => {
+                const user = database.users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    currentUser = user;
+                    showNotification("Login berhasil!", "success");
+                    closeModal('loginModal');
+                    updateUIForLoggedInUser();
+                } else {
+                    showNotification("Email atau password salah!", "error");
+                }
+                
+                showLoading(false);
+            }, 1000);
+        }
+        
+        function register() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            
+            if (!name || !email || !password || !confirmPassword) {
+                showNotification("Harap isi semua field!", "error");
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showNotification("Password tidak cocok!", "error");
+                return;
+            }
+            
+            if (password.length < 8) {
+                showNotification("Password minimal 8 karakter!", "error");
+                return;
+            }
+            
+            showLoading(true);
+            
+            // Simulate API call
+            setTimeout(() => {
+                if (database.users.some(u => u.email === email)) {
+                    showNotification("Email sudah terdaftar!", "error");
+                    showLoading(false);
+                    return;
+                }
+                
+                const newUser = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    password: password,
+                    plan: "Starter",
+                    joinDate: new Date().toISOString()
+                };
+                
+                database.users.push(newUser);
+                currentUser = newUser;
+                
+                showNotification("Pendaftaran berhasil! Selamat datang di PrintLab.", "success");
+                closeModal('registerModal');
+                updateUIForLoggedInUser();
+                
+                showLoading(false);
+            }, 1500);
+        }
+        
+        function updateUIForLoggedInUser() {
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            
+            if (currentUser) {
+                loginBtn.textContent = currentUser.name.split(' ')[0];
+                loginBtn.classList.remove('btn-secondary');
+                loginBtn.classList.add('btn-success');
+                registerBtn.style.display = 'none';
+            }
+        }
+        
+        // Product Functions
+        function selectProduct(productName) {
+            selectedProduct = database.products.find(p => p.name === productName);
+            
+            if (!selectedProduct) {
+                showNotification("Produk tidak ditemukan!", "error");
+                return;
+            }
+            
+            document.getElementById('modalProductTitle').textContent = selectedProduct.name;
+            
+            // Update color options
+            const colorSelect = document.getElementById('productColor');
+            colorSelect.innerHTML = '';
+            selectedProduct.colors.forEach(color => {
+                const option = document.createElement('option');
+                option.value = color;
+                option.textContent = color.charAt(0).toUpperCase() + color.slice(1);
+                colorSelect.appendChild(option);
+            });
+            
+            // Update size options if applicable
+            const sizeSelect = document.getElementById('productSize');
+            if (selectedProduct.sizes.length === 1) {
+                sizeSelect.innerHTML = `<option value="${selectedProduct.sizes[0]}">${selectedProduct.sizes[0]}</option>`;
+                sizeSelect.disabled = true;
+            } else {
+                sizeSelect.disabled = false;
+                sizeSelect.innerHTML = '';
+                selectedProduct.sizes.forEach(size => {
+                    const option = document.createElement('option');
+                    option.value = size;
+                    option.textContent = size;
+                    sizeSelect.appendChild(option);
+                });
+            }
+            
+            productModal.classList.add('active');
+        }
+        
+        function addToCart() {
+            if (!selectedProduct) {
+                showNotification("Pilih produk terlebih dahulu!", "error");
+                return;
+            }
+            
+            if (!currentUser) {
+                showNotification("Silakan login terlebih dahulu!", "error");
+                showLogin();
+                return;
+            }
+            
+            const size = document.getElementById('productSize').value;
+            const color = document.getElementById('productColor').value;
+            const quantity = parseInt(document.getElementById('productQty').value);
+            
+            const cartItem = {
+                id: Date.now(),
+                productId: selectedProduct.id,
+                productName: selectedProduct.name,
+                size: size,
+                color: color,
+                quantity: quantity,
+                price: selectedProduct.price,
+                design: currentDesign,
+                addedAt: new Date().toISOString()
+            };
+            
+            database.cart.push(cartItem);
+            
+            showNotification(`${quantity} ${selectedProduct.name} ditambahkan ke keranjang!`, "success");
+            closeModal('productModal');
+        }
+        
+        // Design Functions
+        function uploadDesign() {
+            const designName = document.getElementById('designName').value;
+            const designDescription = document.getElementById('designDescription').value;
+            
+            if (!designName) {
+                showNotification("Berikan nama untuk desain Anda!", "error");
+                return;
+            }
+            
+            if (!currentDesign) {
+                showNotification("Upload desain terlebih dahulu!", "error");
+                return;
+            }
+            
+            if (!currentUser) {
+                showNotification("Silakan login terlebih dahulu!", "error");
+                showLogin();
+                return;
+            }
+            
+            showLoading(true);
+            
+            // Simulate upload process
+            setTimeout(() => {
+                const newDesign = {
+                    id: Date.now(),
+                    name: designName,
+                    description: designDescription,
+                    fileName: currentDesign.name,
+                    fileSize: currentDesign.size,
+                    fileType: currentDesign.type,
+                    previewUrl: currentDesign.preview,
+                    userId: currentUser.id,
+                    uploadDate: new Date().toISOString(),
+                    status: "pending"
+                };
+                
+                database.designs.push(newDesign);
+                
+                showNotification("Desain berhasil diupload! Silakan pilih produk untuk mencetak.", "success");
+                
+                // Scroll to products section
+                document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+                
+                showLoading(false);
+            }, 2000);
+        }
+        
+        function updateLivePreview() {
+            if (!currentDesign) return;
+            
+            // If it's an image, create an image preview
+            if (currentDesign.type.startsWith('image/')) {
+                livePreview.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = currentDesign.preview;
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '100%';
+                livePreview.appendChild(img);
+            } else {
+                livePreview.innerHTML = `<i class="fas fa-file"></i> ${currentDesign.name}`;
+            }
+        }
+        
+        function changeDesignText() {
+            const newText = prompt("Masukkan teks baru untuk desain:", "Desain Anda");
+            if (newText) {
+                livePreview.innerHTML = newText;
+            }
+        }
+        
+        function changeDesignColor() {
+            const colors = ['#FF6B6B', '#4ECDC4', '#FFD166', '#06D6A0', '#118AB2', '#073B4C'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            livePreview.style.backgroundColor = randomColor;
+        }
+        
+        function resetDesign() {
+            livePreview.innerHTML = '<i class="fas fa-star"></i> Desain Anda';
+            livePreview.style.backgroundColor = 'white';
+            livePreview.style.color = '#3949ab';
+        }
+        
+        // Plan Selection
+        function selectPlan(planName) {
+            if (!currentUser) {
+                showNotification("Silakan login terlebih dahulu!", "error");
+                showLogin();
+                return;
+            }
+            
+            if (planName === 'Enterprise') {
+                showNotification("Tim sales kami akan menghubungi Anda dalam 1x24 jam.", "info");
+                return;
+            }
+            
+            currentUser.plan = planName;
+            showNotification(`Berhasil upgrade ke paket ${planName}!`, "success");
+        }
+        
+        // Utility Functions
+        function showLoading(show) {
+            if (show) {
+                loading.classList.add('active');
+            } else {
+                loading.classList.remove('active');
+            }
+        }
+        
+        function showNotification(message, type = 'info') {
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+        
+        function initializeDemoData() {
+            // Add some demo users
+            database.users.push({
+                id: 1,
+                name: "Demo User",
+                email: "demo@printlab.id",
+                password: "demo123",
+                plan: "Pro",
+                joinDate: "2024-01-01"
+            });
+            
+            // Add some demo designs
+            database.designs.push({
+                id: 1,
+                name: "Summer Vibes 2024",
+                description: "Desain kaos musim panas dengan warna cerah",
+                fileName: "summer-vibes.png",
+                fileSize: 2048000,
+                fileType: "image/png",
+                previewUrl: "",
+                userId: 1,
+                uploadDate: "2024-03-15",
+                status: "approved"
+            });
+            
+            console.log("Demo data initialized");
+        }
+        
+        // Add some animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+        
+        // Window click to close modals
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                closeAllModals();
+            }
+        });
+    </script>
+</body>
+</html>
